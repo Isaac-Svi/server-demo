@@ -5,37 +5,37 @@ const db = require('./database.js');
 const app = express();
 
 // ========================================= MIDDLEWARE ========================================
-// app.use(express.json());
-// app.use(express.urlencoded());
-app.use((req, res, next) => {
-    req.body = '';
+app.use(express.json());
+app.use(express.urlencoded());
+// app.use((req, res, next) => {
+//     req.body = '';
 
-    const converters = {
-        'application/json': JSON.parse,
-        'application/x-www-form-urlencoded': (url) =>
-            Object.fromEntries(url.split('&').map((x) => x.split('='))),
-        default: (url) => {
-            try {
-                url = JSON.parse(url);
-                return url;
-            } catch {
-                return {};
-            }
-        },
-    };
+//     const converters = {
+//         'application/json': JSON.parse,
+//         'application/x-www-form-urlencoded': (url) =>
+//             Object.fromEntries(url.split('&').map((x) => x.split('='))),
+//         default: (url) => {
+//             try {
+//                 url = JSON.parse(url);
+//                 return url;
+//             } catch {
+//                 return {};
+//             }
+//         },
+//     };
 
-    const converter =
-        converters[req.headers['content-type']] || converters.default;
+//     const converter =
+//         converters[req.headers['content-type']] || converters.default;
 
-    req.on('data', (data) => {
-        req.body += data.toString();
-    });
+//     req.on('data', (data) => {
+//         req.body += data.toString();
+//     });
 
-    req.on('end', () => {
-        req.body = converter(req.body);
-        next();
-    });
-});
+//     req.on('end', () => {
+//         req.body = converter(req.body);
+//         next();
+//     });
+// });
 
 // =========================================== ROUTES ===========================================
 // get list of all users and their details
